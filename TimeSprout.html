@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TimeSprout-Web (Alpha)</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&display=swap">
+  <style>
+    :root {
+      --bg-color: #000000;
+      --text-color: #ffffff;
+      --timer-label-color: #ffffff;
+      --timer-text-color: #ffffff;
+      --button-text-color: #000000;
+      --button-bg-color: #542ff0;
+      --link-color: #542ff0;
+      --visualizer-color: #542ff0;
+      --sidebar-bg-color: #000000;
+      --separator-color: #444444;
+      --task-panel-bg: #555555;
+      --task-panel-font: #ffffff;
+      --task-btn-color: #542ff0;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+    }
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200px;
+      height: 100vh;
+      background-color: var(--sidebar-bg-color);
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+      border-right: 2px solid var(--separator-color);
+      z-index: 1000;
+    }
+    .content {
+      margin-left: 220px;
+      padding: 20px;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .nav-button {
+      width: 100%;
+      padding: 15px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: var(--button-bg-color);
+      color: var(--button-text-color);
+      transition: background-color 0.2s;
+      text-align: center;
+    }
+    .nav-button:hover,
+    .nav-button.active {
+      background-color: var(--link-color);
+    }
+
+    .timer-container {
+      position: relative;
+      margin: 30px auto 50px auto;
+      width: 500px;
+      height: 500px;
+    }
+    .timer-border {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 500px;
+      height: 500px;
+      border: 0px solid var(--text-color);
+      border-radius: 50%;
+      box-sizing: border-box;
+      z-index: 1;
+    }
+    .progress-ring-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 500px;
+      height: 500px;
+      z-index: 2;
+    }
+    #progress-ring {
+      stroke: var(--visualizer-color);
+      transition: stroke-dashoffset 0.1s linear;
+    }
+    #timer {
+      position: absolute;
+      z-index: 3;
+      font-size: 100px;
+      font-weight: 600;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: var(--timer-text-color);
+    }
+    .timer-label {
+      position: absolute;
+      z-index: 3;
+      top: 50px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 30px;
+      font-weight: 600;
+      color: var(--timer-label-color);
+    }
+    .session-counter {
+      font-size: 40px;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .controls {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .controls button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 20px;
+      background-color: var(--button-bg-color);
+      font-weight: 400;
+      color: var(--button-text-color);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .settings-container {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .settings-container h1,
+    .settings-container h2 {
+      text-align: center;
+    }
+    .number-field, .color-field {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+    }
+    .number-field label, .color-field label {
+      flex: 1;
+      text-align: left;
+      margin-right: 10px;
+      background-color: #444444;
+      color: #ffffff;
+      height: 30px;
+      line-height: 30px;
+      padding: 0 10px;
+      border-radius: 3px;
+    }
+    .number-field input[type="number"] {
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      font-size: 12px;
+      border: 1px solid #cccccc;
+      border-radius: 3px;
+    }
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    .color-box {
+      width: 30px;
+      height: 30px;
+      border: 1px solid #cccccc;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    .settings-container button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background-color: var(--link-color);
+      color: var(--button-text-color);
+      width: 100%;
+    }
+    .settings-container h2.task-panel-title {
+      margin-top: 40px;
+      text-align: center;
+    }
+    
+    #task-panel {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100vh;
+      background-color: var(--task-panel-bg);
+      color: var(--task-panel-font);
+      padding: 20px;
+      box-sizing: border-box;
+      transition: right 0.3s ease;
+      overflow-y: auto;
+      z-index: 9999;
+    }
+    #task-panel.open {
+      right: 0;
+    }
+    #task-panel h2,
+    #task-panel h3 {
+      margin: 10px 0;
+      text-align: center;
+      background-color: var(--task-panel-bg);
+      padding: 5px;
+      border-radius: 3px;
+      color: var(--task-panel-font);
+    }
+    #add-task-btn {
+      background-color: var(--task-btn-color);
+      color: var(--task-panel-font);
+      border: none;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    #new-task-container {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 10px;
+    }
+    #new-task-container input[type="text"] {
+      flex: 1;
+      padding: 8px;
+      font-size: 14px;
+      border: 1px solid #cccccc;
+      border-radius: 5px;
+    }
+    #new-task-container button {
+      padding: 8px 10px;
+      font-size: 14px;
+      border: none;
+      border-radius: 5px;
+      background-color: var(--task-btn-color);
+      color: var(--task-panel-font);
+      cursor: pointer;
+    }
+    .task-item {
+      display: flex;
+      align-items: center;
+      margin: 5px 0;
+    }
+    .task-item input[type="checkbox"] {
+      margin-right: 10px;
+      transform: scale(0.9);
+    }
+    
+    #opacity-slider-container {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      text-align: center;
+    }
+    #opacity-slider-container label {
+      display: block;
+      margin-bottom: 5px;
+      background-color: #444444;
+      color: #ffffff;
+      height: 20px;
+      line-height: 20px;
+      padding: 0 5px;
+      border-radius: 3px;
+      font-size: 12px;
+    }
+    #opacity-slider-container input[type="range"] {
+      width: 100%;
+    }
+    
+    .task-toggle-btn {
+      position: fixed;
+      top: 20px;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+      background-color: var(--button-bg-color);
+      color: var(--button-text-color);
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10000;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <button id="nav-timer" class="nav-button active">Timer</button>
+    <button id="nav-settings" class="nav-button">Settings</button>
+  </div>
+  
+  <div class="content">
+    <div id="timer-view">
+      <div class="timer-container">
+        <div class="timer-border"></div>
+        <div class="progress-ring-container">
+          <svg width="500" height="500">
+            <circle id="progress-ring"
+                    cx="250" cy="250" r="240"
+                    fill="transparent"
+                    stroke-width="20"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    transform="rotate(-90 250 250)"></circle>
+          </svg>
+        </div>
+        <span id="timer-label" class="timer-label">Timer</span>
+        <div id="timer">00:00</div>
+      </div>
+      <div class="session-counter" id="session-counter">0/0</div>
+      <div class="controls">
+        <button id="play-button">Play</button>
+        <button id="pause-button">Pause</button>
+        <button id="reset-button">Reset</button>
+      </div>
+    </div>
+    
+    <div id="settings-view" style="display:none;">
+      <div class="settings-container">
+        <h1>Timer Settings</h1>
+        <div class="number-field">
+          <label for="study-minutes">Study Minutes:</label>
+          <input type="number" id="study-minutes" min="0" max="120">
+        </div>
+        <div class="number-field">
+          <label for="short-break-minutes">Short Break Minutes:</label>
+          <input type="number" id="short-break-minutes" min="0" max="60">
+        </div>
+        <div class="number-field">
+          <label for="long-break-minutes">Long Break Minutes:</label>
+          <input type="number" id="long-break-minutes" min="0" max="120">
+        </div>
+        <div class="number-field">
+          <label for="long-break-after">Long Break After:</label>
+          <input type="number" id="long-break-after" min="1" max="10">
+        </div>
+        <div class="number-field">
+          <label for="total-sessions">Total Sessions:</label>
+          <input type="number" id="total-sessions" min="1" max="10">
+        </div>
+        <h2>Color Settings</h2>
+        <div class="color-field">
+          <label for="bg-color">Background Color:</label>
+          <div class="color-box" id="bg-color-box"></div>
+          <input type="color" id="bg-color" value="#000000" style="display:none;">
+        </div>
+        <div class="color-field">
+          <label for="timer-label-color">Timer Label Color:</label>
+          <div class="color-box" id="timer-label-color-box"></div>
+          <input type="color" id="timer-label-color" value="#ffffff" style="display:none;">
+        </div>
+        <div class="color-field">
+          <label for="timer-text-color">Timer Text Color:</label>
+          <div class="color-box" id="timer-text-color-box"></div>
+          <input type="color" id="timer-text-color" value="#ffffff" style="display:none;">
+        </div>
+        <div class="color-field">
+          <label for="button-text-color">Button Text Color:</label>
+          <div class="color-box" id="button-text-color-box"></div>
+          <input type="color" id="button-text-color" value="#000000" style="display:none;">
+        </div>
+        <div class="color-field">
+          <label for="button-bg-color">Button Background Color:</label>
+          <div class="color-box" id="button-bg-color-box"></div>
+          <input type="color" id="button-bg-color" value="#542ff0" style="display:none;">
+        </div>
+        <div class="color-field">
+          <label for="visualizer-color">Timer Visualizer Color:</label>
+          <div class="color-box" id="visualizer-color-box"></div>
+          <input type="color" id="visualizer-color" value="#542ff0" style="display:none;">
+        </div>
+        <h2 class="task-panel-title">Task Panel Colors</h2>
+        <div class="color-field task-panel-field">
+          <label for="task-panel-bg-color">Back ground Color:</label>
+          <div class="color-box" id="task-panel-bg-color-box"></div>
+          <input type="color" id="task-panel-bg-color" value="#555555" style="display:none;">
+        </div>
+        <div class="color-field task-panel-field">
+          <label for="task-panel-font-color">Font Color:</label>
+          <div class="color-box" id="task-panel-font-color-box"></div>
+          <input type="color" id="task-panel-font-color" value="#ffffff" style="display:none;">
+        </div>
+        <div class="color-field task-panel-field">
+          <label for="task-btn-color">Button color:</label>
+          <div class="color-box" id="task-btn-color-box"></div>
+          <input type="color" id="task-btn-color" value="#542ff0" style="display:none;">
+        </div>
+        <button id="save-btn">Save Settings</button>
+      </div>
+    </div>
+  </div>
+  
+  <div id="task-panel" class="task-panel">
+    <h2>Tasks</h2>
+    <button id="add-task-btn">Add Task</button>
+    <div id="new-task-container" style="display:none;">
+      <input type="text" id="new-task-input" placeholder="Enter new task">
+      <button id="save-task-btn">Save</button>
+    </div>
+    <h3>Incomplete Tasks</h3>
+    <div id="incomplete-tasks"></div>
+    <h3>Completed Tasks</h3>
+    <div id="completed-tasks"></div>
+    <div id="opacity-slider-container">
+      <label for="task-panel-opacity">Panel Transparency</label>
+      <input type="range" id="task-panel-opacity" min="0" max="1" step="0.01" value="1">
+    </div>
+  </div>
+  
+  <button id="task-toggle-btn" class="task-toggle-btn">◀</button>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const timerView = document.getElementById("timer-view");
+      const settingsView = document.getElementById("settings-view");
+      const navTimer = document.getElementById("nav-timer");
+      const navSettings = document.getElementById("nav-settings");
+      
+      navTimer.addEventListener("click", () => {
+        timerView.style.display = "block";
+        settingsView.style.display = "none";
+        navTimer.classList.add("active");
+        navSettings.classList.remove("active");
+        applyColorSettings();
+      });
+      navSettings.addEventListener("click", () => {
+        timerView.style.display = "none";
+        settingsView.style.display = "block";
+        navSettings.classList.add("active");
+        navTimer.classList.remove("active");
+      });
+      
+      function setupColorBox(inputId, boxId) {
+        const input = document.getElementById(inputId);
+        const box = document.getElementById(boxId);
+        box.addEventListener("click", () => {
+          input.click();
+        });
+      }
+      setupColorBox("bg-color", "bg-color-box");
+      setupColorBox("timer-label-color", "timer-label-color-box");
+      setupColorBox("timer-text-color", "timer-text-color-box");
+      setupColorBox("button-text-color", "button-text-color-box");
+      setupColorBox("button-bg-color", "button-bg-color-box");
+      setupColorBox("visualizer-color", "visualizer-color-box");
+      setupColorBox("task-panel-bg-color", "task-panel-bg-color-box");
+      setupColorBox("task-panel-font-color", "task-panel-font-color-box");
+      setupColorBox("task-btn-color", "task-btn-color-box");
+      
+      function updateColorBox(inputId, boxId) {
+        const val = document.getElementById(inputId).value;
+        document.getElementById(boxId).style.backgroundColor = val;
+      }
+      document.getElementById("bg-color").addEventListener("input", () => {
+        updateColorBox("bg-color", "bg-color-box");
+      });
+      document.getElementById("timer-label-color").addEventListener("input", () => {
+        updateColorBox("timer-label-color", "timer-label-color-box");
+      });
+      document.getElementById("timer-text-color").addEventListener("input", () => {
+        updateColorBox("timer-text-color", "timer-text-color-box");
+      });
+      document.getElementById("button-text-color").addEventListener("input", () => {
+        updateColorBox("button-text-color", "button-text-color-box");
+      });
+      document.getElementById("button-bg-color").addEventListener("input", () => {
+        updateColorBox("button-bg-color", "button-bg-color-box");
+      });
+      document.getElementById("visualizer-color").addEventListener("input", () => {
+        updateColorBox("visualizer-color", "visualizer-color-box");
+      });
+      document.getElementById("task-panel-bg-color").addEventListener("input", () => {
+        updateColorBox("task-panel-bg-color", "task-panel-bg-color-box");
+      });
+      document.getElementById("task-panel-font-color").addEventListener("input", () => {
+        updateColorBox("task-panel-font-color", "task-panel-font-color-box");
+      });
+      document.getElementById("task-btn-color").addEventListener("input", () => {
+        updateColorBox("task-btn-color", "task-btn-color-box");
+      });
+      
+      document.getElementById("study-minutes").value = localStorage.getItem("studyMinutes") || "";
+      document.getElementById("short-break-minutes").value = localStorage.getItem("shortBreakMinutes") || "";
+      document.getElementById("long-break-minutes").value = localStorage.getItem("longBreakMinutes") || "";
+      document.getElementById("long-break-after").value = localStorage.getItem("longBreakAfter") || "";
+      document.getElementById("total-sessions").value = localStorage.getItem("totalSessions") || "";
+      
+      document.getElementById("bg-color").value = localStorage.getItem("bgColor") || "#000000";
+      updateColorBox("bg-color", "bg-color-box");
+      document.getElementById("timer-label-color").value = localStorage.getItem("timerLabelColor") || "#ffffff";
+      updateColorBox("timer-label-color", "timer-label-color-box");
+      document.getElementById("timer-text-color").value = localStorage.getItem("timerTextColor") || "#ffffff";
+      updateColorBox("timer-text-color", "timer-text-color-box");
+      document.getElementById("button-text-color").value = localStorage.getItem("buttonTextColor") || "#000000";
+      updateColorBox("button-text-color", "button-text-color-box");
+      document.getElementById("button-bg-color").value = localStorage.getItem("buttonBgColor") || "#542ff0";
+      updateColorBox("button-bg-color", "button-bg-color-box");
+      document.getElementById("visualizer-color").value = localStorage.getItem("visualizerColor") || "#542ff0";
+      updateColorBox("visualizer-color", "visualizer-color-box");
+      document.getElementById("task-panel-bg-color").value = localStorage.getItem("taskPanelBgColor") || "#555555";
+      updateColorBox("task-panel-bg-color", "task-panel-bg-color-box");
+      document.getElementById("task-panel-font-color").value = localStorage.getItem("taskPanelFontColor") || "#ffffff";
+      updateColorBox("task-panel-font-color", "task-panel-font-color-box");
+      document.getElementById("task-btn-color").value = localStorage.getItem("taskBtnColor") || "#542ff0";
+      updateColorBox("task-btn-color", "task-btn-color-box");
+      
+      document.getElementById("save-btn").addEventListener("click", () => {
+         localStorage.setItem("studyMinutes", document.getElementById("study-minutes").value);
+         localStorage.setItem("shortBreakMinutes", document.getElementById("short-break-minutes").value);
+         localStorage.setItem("longBreakMinutes", document.getElementById("long-break-minutes").value);
+         localStorage.setItem("longBreakAfter", document.getElementById("long-break-after").value);
+         localStorage.setItem("totalSessions", document.getElementById("total-sessions").value);
+         
+         localStorage.setItem("bgColor", document.getElementById("bg-color").value);
+         localStorage.setItem("timerLabelColor", document.getElementById("timer-label-color").value);
+         localStorage.setItem("timerTextColor", document.getElementById("timer-text-color").value);
+         localStorage.setItem("buttonTextColor", document.getElementById("button-text-color").value);
+         localStorage.setItem("buttonBgColor", document.getElementById("button-bg-color").value);
+         localStorage.setItem("visualizerColor", document.getElementById("visualizer-color").value);
+         localStorage.setItem("taskPanelBgColor", document.getElementById("task-panel-bg-color").value);
+         localStorage.setItem("taskPanelFontColor", document.getElementById("task-panel-font-color").value);
+         localStorage.setItem("taskBtnColor", document.getElementById("task-btn-color").value);
+         
+         alert("Settings saved!");
+         applyColorSettings();
+      });
+      
+      function applyColorSettings(){
+         const bgColor = localStorage.getItem("bgColor") || "#000000";
+         const timerLabelColor = localStorage.getItem("timerLabelColor") || "#ffffff";
+         const timerTextColor = localStorage.getItem("timerTextColor") || "#ffffff";
+         const buttonTextColor = localStorage.getItem("buttonTextColor") || "#000000";
+         const buttonBgColor = localStorage.getItem("buttonBgColor") || "#542ff0";
+         const visualizerColor = localStorage.getItem("visualizerColor") || "#542ff0";
+         const taskPanelBgColor = localStorage.getItem("taskPanelBgColor") || "#555555";
+         const taskPanelFontColor = localStorage.getItem("taskPanelFontColor") || "#ffffff";
+         const taskBtnColor = localStorage.getItem("taskBtnColor") || "#542ff0";
+         
+         document.documentElement.style.setProperty("--bg-color", bgColor);
+         document.documentElement.style.setProperty("--timer-label-color", timerLabelColor);
+         document.documentElement.style.setProperty("--timer-text-color", timerTextColor);
+         document.documentElement.style.setProperty("--button-text-color", buttonTextColor);
+         document.documentElement.style.setProperty("--button-bg-color", buttonBgColor);
+         document.documentElement.style.setProperty("--link-color", buttonBgColor);
+         document.documentElement.style.setProperty("--visualizer-color", visualizerColor);
+         document.documentElement.style.setProperty("--task-panel-bg", taskPanelBgColor);
+         document.documentElement.style.setProperty("--task-panel-font", taskPanelFontColor);
+         document.documentElement.style.setProperty("--task-btn-color", taskBtnColor);
+         
+         const taskPanel = document.getElementById("task-panel");
+         taskPanel.style.backgroundColor = taskPanelBgColor;
+         document.getElementById("add-task-btn").style.backgroundColor = taskBtnColor;
+         document.getElementById("add-task-btn").style.color = taskPanelFontColor;
+      }
+      
+      let studyTime, shortBreakTime, longBreakTime, longBreakAfter, totalSessions;
+      let currentSession = 0;
+      let totalTime = 0;
+      let remaining = 0;
+      let intervalID = null;
+      let phase = "";
+      let endTime = 0;
+      
+      const timerTextElem = document.getElementById("timer");
+      const timerLabelElem = document.getElementById("timer-label");
+      const sessionCounterElem = document.getElementById("session-counter");
+      const playButton = document.getElementById("play-button");
+      const pauseButton = document.getElementById("pause-button");
+      const resetButton = document.getElementById("reset-button");
+      
+      const progressRing = document.getElementById("progress-ring");
+      const radius = progressRing.r.baseVal.value;
+      const circumference = 2 * Math.PI * radius;
+      progressRing.style.strokeDasharray = circumference;
+      progressRing.style.strokeDashoffset = 0;
+      
+      function startTimer() {
+         if (currentSession === 0) {
+            const sMin = parseInt(localStorage.getItem("studyMinutes")) || 0;
+            const sbMin = parseInt(localStorage.getItem("shortBreakMinutes")) || 0;
+            const lbMin = parseInt(localStorage.getItem("longBreakMinutes")) || 0;
+            const lbAfter = parseInt(localStorage.getItem("longBreakAfter")) || 1;
+            const totSessions = parseInt(localStorage.getItem("totalSessions")) || 0;
+            
+            studyTime = sMin * 60;
+            shortBreakTime = sbMin * 60;
+            longBreakTime = lbMin * 60;
+            longBreakAfter = lbAfter;
+            totalSessions = totSessions;
+            
+            currentSession = 1;
+            phase = "study";
+            remaining = studyTime;
+            totalTime = studyTime;
+            timerLabelElem.textContent = "FOCUS";
+         }
+         updateSessionCounter();
+         endTime = Date.now() + remaining * 1000;
+         if (intervalID) clearInterval(intervalID);
+         intervalID = setInterval(updateTimer, 1000);
+      }
+      
+      function pauseTimer() {
+         clearInterval(intervalID);
+         intervalID = null;
+         remaining = Math.max(0, (endTime - Date.now()) / 1000);
+      }
+      
+      function resetTimer() {
+         clearInterval(intervalID);
+         intervalID = null;
+         studyTime = 0;
+         shortBreakTime = 0;
+         longBreakTime = 0;
+         currentSession = 0;
+         totalTime = 0;
+         remaining = 0;
+         phase = "";
+         timerLabelElem.textContent = "Timer";
+         timerTextElem.textContent = "00:00";
+         sessionCounterElem.textContent = "0/0";
+         progressRing.style.strokeDashoffset = 0;
+      }
+      
+      function updateTimer() {
+         let now = Date.now();
+         remaining = Math.max(0, (endTime - now) / 1000);
+         let minutes = Math.floor(remaining / 60);
+         let seconds = Math.floor(remaining % 60);
+         timerTextElem.textContent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+         let progress = 1 - (remaining / totalTime);
+         let offset = circumference * progress;
+         progressRing.style.strokeDashoffset = offset;
+         
+         if (remaining <= 0) {
+            clearInterval(intervalID);
+            intervalID = null;
+            if (phase === "study") {
+               if (currentSession === totalSessions) {
+                  resetTimer();
+                  return;
+               } else {
+                  if (currentSession % longBreakAfter === 0) {
+                     phase = "long_break";
+                     remaining = longBreakTime;
+                     totalTime = longBreakTime;
+                     timerLabelElem.textContent = "LONG BREAK";
+                  } else {
+                     phase = "short_break";
+                     remaining = shortBreakTime;
+                     totalTime = shortBreakTime;
+                     timerLabelElem.textContent = "SHORT BREAK";
+                  }
+               }
+            } else {
+               currentSession++;
+               if (currentSession > totalSessions) {
+                  resetTimer();
+                  return;
+               }
+               phase = "study";
+               remaining = studyTime;
+               totalTime = studyTime;
+               timerLabelElem.textContent = "FOCUS";
+            }
+            updateSessionCounter();
+            endTime = Date.now() + remaining * 1000;
+            intervalID = setInterval(updateTimer, 1000);
+         }
+      }
+      
+      function updateSessionCounter() {
+         sessionCounterElem.textContent = `${currentSession}/${totalSessions}`;
+      }
+      
+      playButton.addEventListener("click", startTimer);
+      pauseButton.addEventListener("click", pauseTimer);
+      resetButton.addEventListener("click", resetTimer);
+      
+      const taskPanel = document.getElementById("task-panel");
+      const taskToggleBtn = document.getElementById("task-toggle-btn");
+      
+      taskToggleBtn.addEventListener("click", function () {
+         taskPanel.classList.toggle("open");
+         taskToggleBtn.innerHTML = taskPanel.classList.contains("open") ? "▶" : "◀";
+      });
+      
+      const opacitySlider = document.getElementById("task-panel-opacity");
+      opacitySlider.addEventListener("input", function () {
+         const baseHex = localStorage.getItem("taskPanelBgColor") || "#555555";
+         const rgb = hexToRgb(baseHex);
+         taskPanel.style.backgroundColor = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${opacitySlider.value})`;
+      });
+      
+      function hexToRgb(hex) {
+         hex = hex.replace(/^#/, "");
+         const bigint = parseInt(hex, 16);
+         return {
+            r: (bigint >> 16) & 255,
+            g: (bigint >> 8) & 255,
+            b: bigint & 255,
+         };
+      }
+      
+      const addTaskBtn = document.getElementById("add-task-btn");
+      const newTaskContainer = document.getElementById("new-task-container");
+      const saveTaskBtn = document.getElementById("save-task-btn");
+      const newTaskInput = document.getElementById("new-task-input");
+      const incompleteTasksContainer = document.getElementById("incomplete-tasks");
+      const completedTasksContainer = document.getElementById("completed-tasks");
+      
+      addTaskBtn.addEventListener("click", function () {
+         newTaskContainer.style.display = "flex";
+         newTaskInput.focus();
+      });
+      
+      saveTaskBtn.addEventListener("click", function () {
+         const taskText = newTaskInput.value.trim();
+         if (taskText !== "") {
+            addTask(taskText);
+            newTaskInput.value = "";
+            newTaskContainer.style.display = "none";
+         }
+      });
+      
+      function addTask(text) {
+         const taskItem = document.createElement("div");
+         taskItem.className = "task-item";
+         const checkbox = document.createElement("input");
+         checkbox.type = "checkbox";
+         const span = document.createElement("span");
+         span.textContent = text;
+         taskItem.appendChild(checkbox);
+         taskItem.appendChild(span);
+         incompleteTasksContainer.appendChild(taskItem);
+         
+         checkbox.addEventListener("change", function () {
+            if (this.checked) {
+               completedTasksContainer.appendChild(taskItem);
+            } else {
+               incompleteTasksContainer.appendChild(taskItem);
+            }
+         });
+      }
+      
+      applyColorSettings();
+    });
+  </script>
+</body>
+</html>
