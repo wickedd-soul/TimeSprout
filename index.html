@@ -101,7 +101,7 @@
     }
     #progress-ring {
       stroke: var(--visualizer-color);
-      transition: stroke-dashoffset 0.1s linear;
+      transition: stroke-dashoffset 1s linear;
     }
     #timer {
       position: absolute;
@@ -153,12 +153,12 @@
     .settings-container h2 {
       text-align: center;
     }
-    .number-field, .color-field {
+    .number-field, .color-field, .sound-field {
       display: flex;
       align-items: center;
       margin: 10px 0;
     }
-    .number-field label, .color-field label {
+    .number-field label, .color-field label, .sound-field label {
       flex: 1;
       text-align: left;
       margin-right: 10px;
@@ -188,6 +188,14 @@
       border: 1px solid #cccccc;
       cursor: pointer;
       border-radius: 3px;
+    }
+    .sound-field select {
+      width: 100px;
+      height: 30px;
+      font-size: 12px;
+      border: 1px solid #cccccc;
+      border-radius: 3px;
+      background-color: white;
     }
     .settings-container button {
       margin-top: 20px;
@@ -399,6 +407,85 @@
           <div class="color-box" id="visualizer-color-box"></div>
           <input type="color" id="visualizer-color" value="#542ff0" style="display:none;">
         </div>
+        <h2>Sound Settings</h2>
+        <div class="sound-field">
+          <label for="focus-sound-select">Focus End Sound:</label>
+          <select id="focus-sound-select">
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(1).mp3">Notify-1 (Default)</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(2).mp3">Notify-2</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(3).mp3">Notify-3</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(4).mp3">Notify-4</option>  
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(5).mp3">Notify-5</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(6).mp3">Notify-6</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(7).mp3">Notify-7</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(8).mp3">Notify-8</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(9).mp3">Notify-9</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(10).mp3">Notify-10</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(11).mp3">Notify-11</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(12).mp3">Notify-12</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(13).mp3">Notify-13</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(14).mp3">Notify-14</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(15).mp3">Notify-15</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(16).mp3">Notify-16</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(17).mp3">Notify-17</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(18).mp3">Notify-18</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(19).mp3">Notify-19</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(20).mp3">Notify-20</option>
+            <option value="none">None</option>
+          </select>
+        </div>
+        <div class="sound-field">
+          <label for="short-break-sound-select">Short Break End Sound:</label>
+          <select id="short-break-sound-select">
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(1).mp3">Notify-1 (Default)</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(2).mp3">Notify-2</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(3).mp3">Notify-3</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(4).mp3">Notify-4</option>  
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(5).mp3">Notify-5</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(6).mp3">Notify-6</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(7).mp3">Notify-7</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(8).mp3">Notify-8</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(9).mp3">Notify-9</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(10).mp3">Notify-10</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(11).mp3">Notify-11</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(12).mp3">Notify-12</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(13).mp3">Notify-13</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(14).mp3">Notify-14</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(15).mp3">Notify-15</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(16).mp3">Notify-16</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(17).mp3">Notify-17</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(18).mp3">Notify-18</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(19).mp3">Notify-19</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(20).mp3">Notify-20</option>
+            <option value="none">None</option>
+          </select>
+        </div>
+        <div class="sound-field">
+          <label for="long-break-sound-select">Long Break End Sound:</label>
+          <select id="long-break-sound-select">
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(1).mp3">Notify-1 (Default)</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(2).mp3">Notify-2</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(3).mp3">Notify-3</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(4).mp3">Notify-4</option>  
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(5).mp3">Notify-5</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(6).mp3">Notify-6</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(7).mp3">Notify-7</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(8).mp3">Notify-8</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(9).mp3">Notify-9</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(10).mp3">Notify-10</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(11).mp3">Notify-11</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(12).mp3">Notify-12</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(13).mp3">Notify-13</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(14).mp3">Notify-14</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(15).mp3">Notify-15</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(16).mp3">Notify-16</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(17).mp3">Notify-17</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(18).mp3">Notify-18</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(19).mp3">Notify-19</option>
+            <option value="https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(20).mp3">Notify-20</option>
+            <option value="none">None</option>
+          </select>
+        </div>
         <h2 class="task-panel-title">Task Panel Colors</h2>
         <div class="color-field task-panel-field">
           <label for="task-panel-bg-color">Back ground Color:</label>
@@ -439,8 +526,36 @@
   
   <button id="task-toggle-btn" class="task-toggle-btn">◀</button>
   
+  <audio id="focus-sound" preload="auto"></audio>
+  <audio id="short-break-sound" preload="auto"></audio>
+  <audio id="long-break-sound" preload="auto"></audio>
+  
   <script>
     document.addEventListener("DOMContentLoaded", function() {
+      const soundUrls = {
+        "Notify-1 (default)": 'https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(1).mp3',
+        "Notify-2": 'https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(2).mp3',
+        "Notify-3": 'https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(3).mp3',
+        "Notify-4": 'https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(4).mp3',
+        "Notify-5": 'https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(5).mp3',
+        "Notify-6": 'https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(6).mp3',
+        "Notify-7": 'https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(7).mp3',
+        "Notify-8": 'https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(8).mp3',
+        "Notify-9": 'https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(9).mp3',
+        "Notify-10": 'https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(10).mp3',
+        "Notify-11": 'https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(11).mp3',
+        "Notify-12": 'https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(12).mp3',
+        "Notify-13": 'https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(13).mp3',
+        "Notify-14": 'https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(14).mp3',
+        "Notify-15": 'https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(15).mp3',
+        "Notify-16": 'https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(16).mp3',
+        "Notify-17": 'https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(17).mp3',
+        "Notify-18": 'https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(18).mp3',
+        "Notify-19": 'https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(19).mp3',
+        "Notify-20": 'https://github.com/wickedd-soul/TimeSprout/blob/TimeSprout/Sounds/Notify%20(20).mp3',
+        none: ''
+      };
+
       const timerView = document.getElementById("timer-view");
       const settingsView = document.getElementById("settings-view");
       const navTimer = document.getElementById("nav-timer");
@@ -534,53 +649,73 @@
       document.getElementById("task-btn-color").value = localStorage.getItem("taskBtnColor") || "#542ff0";
       updateColorBox("task-btn-color", "task-btn-color-box");
       
+      document.getElementById("focus-sound-select").value = localStorage.getItem("focusSound") || "default";
+      document.getElementById("short-break-sound-select").value = localStorage.getItem("shortBreakSound") || "default";
+      document.getElementById("long-break-sound-select").value = localStorage.getItem("longBreakSound") || "default";
+
+      const focusSound = document.getElementById("focus-sound");
+      const shortBreakSound = document.getElementById("short-break-sound");
+      const longBreakSound = document.getElementById("long-break-sound");
+      
+      focusSound.src = soundUrls[localStorage.getItem("focusSound")] || soundUrls.default;
+      shortBreakSound.src = soundUrls[localStorage.getItem("shortBreakSound")] || soundUrls.default;
+      longBreakSound.src = soundUrls[localStorage.getItem("longBreakSound")] || soundUrls.default;
+      
       document.getElementById("save-btn").addEventListener("click", () => {
-         localStorage.setItem("studyMinutes", document.getElementById("study-minutes").value);
-         localStorage.setItem("shortBreakMinutes", document.getElementById("short-break-minutes").value);
-         localStorage.setItem("longBreakMinutes", document.getElementById("long-break-minutes").value);
-         localStorage.setItem("longBreakAfter", document.getElementById("long-break-after").value);
-         localStorage.setItem("totalSessions", document.getElementById("total-sessions").value);
-         
-         localStorage.setItem("bgColor", document.getElementById("bg-color").value);
-         localStorage.setItem("timerLabelColor", document.getElementById("timer-label-color").value);
-         localStorage.setItem("timerTextColor", document.getElementById("timer-text-color").value);
-         localStorage.setItem("buttonTextColor", document.getElementById("button-text-color").value);
-         localStorage.setItem("buttonBgColor", document.getElementById("button-bg-color").value);
-         localStorage.setItem("visualizerColor", document.getElementById("visualizer-color").value);
-         localStorage.setItem("taskPanelBgColor", document.getElementById("task-panel-bg-color").value);
-         localStorage.setItem("taskPanelFontColor", document.getElementById("task-panel-font-color").value);
-         localStorage.setItem("taskBtnColor", document.getElementById("task-btn-color").value);
-         
-         alert("Settings saved!");
-         applyColorSettings();
+        localStorage.setItem("studyMinutes", document.getElementById("study-minutes").value);
+        localStorage.setItem("shortBreakMinutes", document.getElementById("short-break-minutes").value);
+        localStorage.setItem("longBreakMinutes", document.getElementById("long-break-minutes").value);
+        localStorage.setItem("longBreakAfter", document.getElementById("long-break-after").value);
+        localStorage.setItem("totalSessions", document.getElementById("total-sessions").value);
+        
+        localStorage.setItem("bgColor", document.getElementById("bg-color").value);
+        localStorage.setItem("timerLabelColor", document.getElementById("timer-label-color").value);
+        localStorage.setItem("timerTextColor", document.getElementById("timer-text-color").value);
+        localStorage.setItem("buttonTextColor", document.getElementById("button-text-color").value);
+        localStorage.setItem("buttonBgColor", document.getElementById("button-bg-color").value);
+        localStorage.setItem("visualizerColor", document.getElementById("visualizer-color").value);
+        localStorage.setItem("taskPanelBgColor", document.getElementById("task-panel-bg-color").value);
+        localStorage.setItem("taskPanelFontColor", document.getElementById("task-panel-font-color").value);
+        localStorage.setItem("taskBtnColor", document.getElementById("task-btn-color").value);
+        
+        localStorage.setItem("focusSound", document.getElementById("focus-sound-select").value);
+        localStorage.setItem("shortBreakSound", document.getElementById("short-break-sound-select").value);
+        localStorage.setItem("longBreakSound", document.getElementById("long-break-sound-select").value);
+        
+        focusSound.src = soundUrls[document.getElementById("focus-sound-select").value];
+        shortBreakSound.src = soundUrls[document.getElementById("short-break-sound-select").value];
+        longBreakSound.src = soundUrls[document.getElementById("long-break-sound-select").value];
+        
+        alert("Settings saved!");
+        applyColorSettings();
       });
       
       function applyColorSettings(){
-         const bgColor = localStorage.getItem("bgColor") || "#000000";
-         const timerLabelColor = localStorage.getItem("timerLabelColor") || "#ffffff";
-         const timerTextColor = localStorage.getItem("timerTextColor") || "#ffffff";
-         const buttonTextColor = localStorage.getItem("buttonTextColor") || "#000000";
-         const buttonBgColor = localStorage.getItem("buttonBgColor") || "#542ff0";
-         const visualizerColor = localStorage.getItem("visualizerColor") || "#542ff0";
-         const taskPanelBgColor = localStorage.getItem("taskPanelBgColor") || "#555555";
-         const taskPanelFontColor = localStorage.getItem("taskPanelFontColor") || "#ffffff";
-         const taskBtnColor = localStorage.getItem("taskBtnColor") || "#542ff0";
-         
-         document.documentElement.style.setProperty("--bg-color", bgColor);
-         document.documentElement.style.setProperty("--timer-label-color", timerLabelColor);
-         document.documentElement.style.setProperty("--timer-text-color", timerTextColor);
-         document.documentElement.style.setProperty("--button-text-color", buttonTextColor);
-         document.documentElement.style.setProperty("--button-bg-color", buttonBgColor);
-         document.documentElement.style.setProperty("--link-color", buttonBgColor);
-         document.documentElement.style.setProperty("--visualizer-color", visualizerColor);
-         document.documentElement.style.setProperty("--task-panel-bg", taskPanelBgColor);
-         document.documentElement.style.setProperty("--task-panel-font", taskPanelFontColor);
-         document.documentElement.style.setProperty("--task-btn-color", taskBtnColor);
-         
-         const taskPanel = document.getElementById("task-panel");
-         taskPanel.style.backgroundColor = taskPanelBgColor;
-         document.getElementById("add-task-btn").style.backgroundColor = taskBtnColor;
-         document.getElementById("add-task-btn").style.color = taskPanelFontColor;
+        const bgColor = localStorage.getItem("bgColor") || "#000000";
+        const timerLabelColor = localStorage.getItem("timerLabelColor") || "#ffffff";
+        const timerTextColor = localStorage.getItem("timerTextColor") || "#ffffff";
+        const buttonTextColor = localStorage.getItem("buttonTextColor") || "#000000";
+        const buttonBgColor = localStorage.getItem("buttonBgColor") || "#542ff0";
+        const visualizerColor = localStorage.getItem("visualizerColor") || "#542ff0";
+        const taskPanelBgColor = localStorage.getItem("taskPanelBgColor") || "#555555";
+        const taskPanelFontColor = localStorage.getItem("taskPanelFontColor") || "#ffffff";
+        const taskBtnColor = localStorage.getItem("taskBtnColor") || "#542ff0";
+        
+        document.documentElement.style.setProperty("--bg-color", bgColor);
+        document.documentElement.style.setProperty("--timer-label-color", timerLabelColor);
+        document.documentElement.style.setProperty("--timer-text-color", timerTextColor);
+        document.documentElement.style.setProperty("--button-text-color", buttonTextColor);
+        document.documentElement.style.setProperty("--button-bg-color", buttonBgColor);
+        document.documentElement.style.setProperty("--link-color", buttonBgColor);
+        document.documentElement.style.setProperty("--visualizer-color", visualizerColor);
+        document.documentElement.style.setProperty("--task-panel-bg", taskPanelBgColor);
+        document.documentElement.style.setProperty("--task-panel-font", taskPanelFontColor);
+        document.documentElement.style.setProperty("--task-btn-color", taskBtnColor);
+        
+        const taskPanel = document.getElementById("task-panel");
+        taskPanel.style.backgroundColor = taskPanelBgColor;
+        document.getElementById("add-task-btn").style.backgroundColor = taskBtnColor;
+        document.getElementById("add-task-btn").style.color = taskPanelFontColor;
       }
       
       let studyTime, shortBreakTime, longBreakTime, longBreakAfter, totalSessions;
@@ -605,102 +740,111 @@
       progressRing.style.strokeDashoffset = 0;
       
       function startTimer() {
-         if (currentSession === 0) {
-            const sMin = parseInt(localStorage.getItem("studyMinutes")) || 0;
-            const sbMin = parseInt(localStorage.getItem("shortBreakMinutes")) || 0;
-            const lbMin = parseInt(localStorage.getItem("longBreakMinutes")) || 0;
-            const lbAfter = parseInt(localStorage.getItem("longBreakAfter")) || 1;
-            const totSessions = parseInt(localStorage.getItem("totalSessions")) || 0;
-            
-            studyTime = sMin * 60;
-            shortBreakTime = sbMin * 60;
-            longBreakTime = lbMin * 60;
-            longBreakAfter = lbAfter;
-            totalSessions = totSessions;
-            
-            currentSession = 1;
+        if (currentSession === 0) {
+          const sMin = parseInt(localStorage.getItem("studyMinutes")) || 0;
+          const sbMin = parseInt(localStorage.getItem("shortBreakMinutes")) || 0;
+          const lbMin = parseInt(localStorage.getItem("longBreakMinutes")) || 0;
+          const lbAfter = parseInt(localStorage.getItem("longBreakAfter")) || 1;
+          const totSessions = parseInt(localStorage.getItem("totalSessions")) || 0;
+          
+          studyTime = sMin * 60;
+          shortBreakTime = sbMin * 60;
+          longBreakTime = lbMin * 60;
+          longBreakAfter = lbAfter;
+          totalSessions = totSessions;
+          
+          currentSession = 1;
+          phase = "study";
+          remaining = studyTime;
+          totalTime = studyTime;
+          timerLabelElem.textContent = "FOCUS";
+        }
+        updateSessionCounter();
+        endTime = Date.now() + remaining * 1000;
+        if (intervalID) clearInterval(intervalID);
+        intervalID = setInterval(updateTimer, 1000);
+      }
+      
+      function pauseTimer() {
+        clearInterval(intervalID);
+        intervalID = null;
+        remaining = Math.max(0, (endTime - Date.now()) / 1000);
+      }
+      
+      function resetTimer() {
+        clearInterval(intervalID);
+        intervalID = null;
+        studyTime = 0;
+        shortBreakTime = 0;
+        longBreakTime = 0;
+        currentSession = 0;
+        totalTime = 0;
+        remaining = 0;
+        phase = "";
+        timerLabelElem.textContent = "Timer";
+        timerTextElem.textContent = "00:00";
+        sessionCounterElem.textContent = "0/0";
+        progressRing.style.strokeDashoffset = 0;
+      }
+      
+      function updateTimer() {
+        let now = Date.now();
+        remaining = Math.max(0, (endTime - now) / 1000);
+        let minutes = Math.floor(remaining / 60);
+        let seconds = Math.floor(remaining % 60);
+        timerTextElem.textContent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
+        let progress = 1 - (remaining / totalTime);
+        let offset = circumference * progress;
+        progressRing.style.strokeDashoffset = offset;
+        
+        if (remaining <= 0) {
+          clearInterval(intervalID);
+          intervalID = null;
+          
+          if (phase === "study" && focusSound.src !== soundUrls.none) {
+            focusSound.play();
+          } else if (phase === "short_break" && shortBreakSound.src !== soundUrls.none) {
+            shortBreakSound.play();
+          } else if (phase === "long_break" && longBreakSound.src !== soundUrls.none) {
+            longBreakSound.play();
+          }
+          
+          if (phase === "study") {
+            if (currentSession === totalSessions) {
+              resetTimer();
+              return;
+            } else {
+              if (currentSession % longBreakAfter === 0) {
+                phase = "long_break";
+                remaining = longBreakTime;
+                totalTime = longBreakTime;
+                timerLabelElem.textContent = "LONG BREAK";
+              } else {
+                phase = "short_break";
+                remaining = shortBreakTime;
+                totalTime = shortBreakTime;
+                timerLabelElem.textContent = "SHORT BREAK";
+              }
+            }
+          } else {
+            currentSession++;
+            if (currentSession > totalSessions) {
+              resetTimer();
+              return;
+            }
             phase = "study";
             remaining = studyTime;
             totalTime = studyTime;
             timerLabelElem.textContent = "FOCUS";
-         }
-         updateSessionCounter();
-         endTime = Date.now() + remaining * 1000;
-         if (intervalID) clearInterval(intervalID);
-         intervalID = setInterval(updateTimer, 1000);
-      }
-      
-      function pauseTimer() {
-         clearInterval(intervalID);
-         intervalID = null;
-         remaining = Math.max(0, (endTime - Date.now()) / 1000);
-      }
-      
-      function resetTimer() {
-         clearInterval(intervalID);
-         intervalID = null;
-         studyTime = 0;
-         shortBreakTime = 0;
-         longBreakTime = 0;
-         currentSession = 0;
-         totalTime = 0;
-         remaining = 0;
-         phase = "";
-         timerLabelElem.textContent = "Timer";
-         timerTextElem.textContent = "00:00";
-         sessionCounterElem.textContent = "0/0";
-         progressRing.style.strokeDashoffset = 0;
-      }
-      
-      function updateTimer() {
-         let now = Date.now();
-         remaining = Math.max(0, (endTime - now) / 1000);
-         let minutes = Math.floor(remaining / 60);
-         let seconds = Math.floor(remaining % 60);
-         timerTextElem.textContent = `${minutes}:${seconds < 10 ? '0' + seconds : seconds}`;
-         let progress = 1 - (remaining / totalTime);
-         let offset = circumference * progress;
-         progressRing.style.strokeDashoffset = offset;
-         
-         if (remaining <= 0) {
-            clearInterval(intervalID);
-            intervalID = null;
-            if (phase === "study") {
-               if (currentSession === totalSessions) {
-                  resetTimer();
-                  return;
-               } else {
-                  if (currentSession % longBreakAfter === 0) {
-                     phase = "long_break";
-                     remaining = longBreakTime;
-                     totalTime = longBreakTime;
-                     timerLabelElem.textContent = "LONG BREAK";
-                  } else {
-                     phase = "short_break";
-                     remaining = shortBreakTime;
-                     totalTime = shortBreakTime;
-                     timerLabelElem.textContent = "SHORT BREAK";
-                  }
-               }
-            } else {
-               currentSession++;
-               if (currentSession > totalSessions) {
-                  resetTimer();
-                  return;
-               }
-               phase = "study";
-               remaining = studyTime;
-               totalTime = studyTime;
-               timerLabelElem.textContent = "FOCUS";
-            }
-            updateSessionCounter();
-            endTime = Date.now() + remaining * 1000;
-            intervalID = setInterval(updateTimer, 1000);
-         }
+          }
+          updateSessionCounter();
+          endTime = Date.now() + remaining * 1000;
+          intervalID = setInterval(updateTimer, 1000);
+        }
       }
       
       function updateSessionCounter() {
-         sessionCounterElem.textContent = `${currentSession}/${totalSessions}`;
+        sessionCounterElem.textContent = `${currentSession}/${totalSessions}`;
       }
       
       playButton.addEventListener("click", startTimer);
@@ -711,25 +855,25 @@
       const taskToggleBtn = document.getElementById("task-toggle-btn");
       
       taskToggleBtn.addEventListener("click", function () {
-         taskPanel.classList.toggle("open");
-         taskToggleBtn.innerHTML = taskPanel.classList.contains("open") ? "▶" : "◀";
+        taskPanel.classList.toggle("open");
+        taskToggleBtn.innerHTML = taskPanel.classList.contains("open") ? "▶" : "◀";
       });
       
       const opacitySlider = document.getElementById("task-panel-opacity");
       opacitySlider.addEventListener("input", function () {
-         const baseHex = localStorage.getItem("taskPanelBgColor") || "#555555";
-         const rgb = hexToRgb(baseHex);
-         taskPanel.style.backgroundColor = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${opacitySlider.value})`;
+        const baseHex = localStorage.getItem("taskPanelBgColor") || "#555555";
+        const rgb = hexToRgb(baseHex);
+        taskPanel.style.backgroundColor = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, ${opacitySlider.value})`;
       });
       
       function hexToRgb(hex) {
-         hex = hex.replace(/^#/, "");
-         const bigint = parseInt(hex, 16);
-         return {
-            r: (bigint >> 16) & 255,
-            g: (bigint >> 8) & 255,
-            b: bigint & 255,
-         };
+        hex = hex.replace(/^#/, "");
+        const bigint = parseInt(hex, 16);
+        return {
+          r: (bigint >> 16) & 255,
+          g: (bigint >> 8) & 255,
+          b: bigint & 255,
+        };
       }
       
       const addTaskBtn = document.getElementById("add-task-btn");
@@ -740,38 +884,48 @@
       const completedTasksContainer = document.getElementById("completed-tasks");
       
       addTaskBtn.addEventListener("click", function () {
-         newTaskContainer.style.display = "flex";
-         newTaskInput.focus();
+        newTaskContainer.style.display = "flex";
+        newTaskInput.focus();
       });
       
       saveTaskBtn.addEventListener("click", function () {
-         const taskText = newTaskInput.value.trim();
-         if (taskText !== "") {
-            addTask(taskText);
-            newTaskInput.value = "";
-            newTaskContainer.style.display = "none";
-         }
+        const taskText = newTaskInput.value.trim();
+        if (taskText !== "") {
+          addTask(taskText);
+          newTaskInput.value = "";
+          newTaskContainer.style.display = "none";
+        }
       });
       
       function addTask(text) {
-         const taskItem = document.createElement("div");
-         taskItem.className = "task-item";
-         const checkbox = document.createElement("input");
-         checkbox.type = "checkbox";
-         const span = document.createElement("span");
-         span.textContent = text;
-         taskItem.appendChild(checkbox);
-         taskItem.appendChild(span);
-         incompleteTasksContainer.appendChild(taskItem);
-         
-         checkbox.addEventListener("change", function () {
-            if (this.checked) {
-               completedTasksContainer.appendChild(taskItem);
-            } else {
-               incompleteTasksContainer.appendChild(taskItem);
-            }
-         });
+        const taskItem = document.createElement("div");
+        taskItem.className = "task-item";
+        const checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        const span = document.createElement("span");
+        span.textContent = text;
+        taskItem.appendChild(checkbox);
+        taskItem.appendChild(span);
+        incompleteTasksContainer.appendChild(taskItem);
+        
+        checkbox.addEventListener("change", function () {
+          if (this.checked) {
+            completedTasksContainer.appendChild(taskItem);
+          } else {
+            incompleteTasksContainer.appendChild(taskItem);
+          }
+        });
       }
+      
+      document.getElementById("focus-sound-select").addEventListener("change", function() {
+        focusSound.src = soundUrls[this.value];
+      });
+      document.getElementById("short-break-sound-select").addEventListener("change", function() {
+        shortBreakSound.src = soundUrls[this.value];
+      });
+      document.getElementById("long-break-sound-select").addEventListener("change", function() {
+        longBreakSound.src = soundUrls[this.value];
+      });
       
       applyColorSettings();
     });
