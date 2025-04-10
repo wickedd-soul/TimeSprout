@@ -922,7 +922,7 @@
           if (selectedSound) {
               focusSound.src = selectedSound;
           } else {
-              focusSound.src = ""; // Fallback to an empty source
+            focusSound.src = soundUrls[localStorage.getItem("focusSound")] || soundUrls["Notify-1 (default)"];
           }
       });
 
@@ -931,8 +931,7 @@
           if (selectedSound) {
               shortBreakSound.src = selectedSound;
           } else {
-              shortBreakSound.src = ""; // Fallback to an empty source
-          }
+              shortBreakSound.src = soundUrls[localStorage.getItem("shortBreakSound")] || soundUrls["Notify-1 (default)"];  }
       });
 
       document.getElementById("long-break-sound-select").addEventListener("change", function () {
@@ -940,7 +939,7 @@
           if (selectedSound) {
               longBreakSound.src = selectedSound;
           } else {
-              longBreakSound.src = ""; // Fallback to an empty source
+              longBreakSound.src = soundUrls[localStorage.getItem("longBreakSound")] || soundUrls["Notify-1 (default)"];
           }
       });
       
